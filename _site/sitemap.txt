@@ -1,0 +1,10 @@
+
+https://github.com/HelKyle/page/timing.html
+https://github.com/HelKyle/sitemap.txt
+https://github.com/HelKyle/page/read.html
+https://github.com/HelKyle/index.html
+https://github.com/HelKyle/page/feed.xml
+https://github.com/HelKyle/page/category.html
+https://github.com/HelKyle/page/about.html
+
+https://github.com/HelKyle/blog/2014/11/24/HelloWorld.html
