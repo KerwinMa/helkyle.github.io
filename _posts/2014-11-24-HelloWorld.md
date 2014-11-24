@@ -1,8 +1,8 @@
 ---
 layout: post
-title: HelloWorld
+title: 大话西游
 category: test
 date: 2014-11-24
 ---
 
-总算是搭上了自己的blog，接下来还要绑定gitcafe
+他好像条狗
