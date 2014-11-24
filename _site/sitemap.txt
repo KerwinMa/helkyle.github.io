@@ -7,4 +7,5 @@ https://github.com/HelKyle/page/feed.xml
 https://github.com/HelKyle/page/category.html
 https://github.com/HelKyle/page/about.html
 
+https://github.com/HelKyle/blog/2014/11/24/Run.html
 https://github.com/HelKyle/blog/2014/11/24/HelloWorld.html

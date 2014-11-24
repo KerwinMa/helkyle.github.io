@@ -5,19 +5,36 @@
     <description>HelKyle - 从前以后过去了再不来</description>
     <link>https://github.com/HelKyle</link>
     <atom:link href="https://github.com/HelKyle/page/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 25 Nov 2014 00:29:11 +0800</pubDate>
-    <lastBuildDate>Tue, 25 Nov 2014 00:29:11 +0800</lastBuildDate>
+    <pubDate>Tue, 25 Nov 2014 01:26:16 +0800</pubDate>
+    <lastBuildDate>Tue, 25 Nov 2014 01:26:16 +0800</lastBuildDate>
     <generator>HelKyle</generator>
     
       <item>
+        <title>总有一天</title>
+        <description>&lt;p&gt;总有一天我要过我想要的生活！
+&lt;img src=&quot;/res/img/20141122.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 24 Nov 2014 00:00:00 +0800</pubDate>
+        <link>https://github.com/HelKyle/blog/2014/11/24/Run.html</link>
+        <guid isPermaLink="true">https://github.com/HelKyle/blog/2014/11/24/Run.html</guid>
+        
+        <category>白日梦</category>
+        
+      </item>
+    
+      <item>
         <title>大话西游</title>
-        <description>&lt;p&gt;他好像条狗&lt;/p&gt;
+        <description>&lt;p&gt;&lt;code&gt;我知道有一天他会在一个万众嘱目的情况下出现，身披金甲圣衣，脚踏七彩云来娶我！  &lt;/code&gt;&lt;br /&gt;
+&lt;img src=&quot;/res/img/大话西游.jpeg&quot; alt=&quot;zixia&quot; /&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;他活得好像条狗!&lt;/code&gt;&lt;br /&gt;
+&lt;img src=&quot;/res/img/likeadog.jpg&quot; alt=&quot;likeadog&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 24 Nov 2014 00:00:00 +0800</pubDate>
         <link>https://github.com/HelKyle/blog/2014/11/24/HelloWorld.html</link>
         <guid isPermaLink="true">https://github.com/HelKyle/blog/2014/11/24/HelloWorld.html</guid>
         
-        <category>test</category>
+        <category>白日梦</category>
         
       </item>
     
