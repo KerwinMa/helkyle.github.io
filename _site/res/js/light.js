@@ -46,8 +46,8 @@ $(document).ready(function() {
         scrolling: 'no',
     });
     // Pictures
-    var images = ["/res/img/bg/02.jpg", "/res/img/bg/03.jpg",  "/res/img/bg/04.jpg","/res/img/bg/05.jpg", "/res/img/bg/06.jpg"
-    , "/res/img/bg/07.jpg", "/res/img/bg/08.jpg","/res/img/bg/09.jpg"];
+    var images = ["/res/img/bg/02.jpg", "/res/img/bg/03.jpg",  "/res/img/bg/04.jpg","/res/img/bg/05.jpg"
+    , "/res/img/bg/07.jpg","/res/img/bg/09.jpg"];
     images.sort(function() {
         return Math.random() > 0.5 ? -1 : 1
     });
