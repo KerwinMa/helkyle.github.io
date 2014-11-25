@@ -20,10 +20,10 @@ blog:
     name: HelKyle                                        # 博客名称
     description: 从前以后过去了再不来                          # 博客描述
     title: HelKyle                                         # 网页标题
-    url: https://github.com/HelKyle                        # 博客地址
-    duoshuo: Joueu周大楷                                        # 多说ID 
-    tongji: joueu              # 百度统计ID
-    qiniu: joueu@sina.com                                               # 七牛云地址
+    url: https://github.com/HelKyle                      # 博客地址
+    duoshuo: Joueu周大楷                                  # 多说ID 
+    tongji: joueu                                        # 百度统计ID
+    qiniu: joueu@sina.com                                # 七牛云地址
 author:
     name: HelKyle                                        # 作者名称
     email: zhouxk@koalac.com                             # 邮箱地址
