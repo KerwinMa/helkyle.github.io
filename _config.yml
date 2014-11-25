@@ -21,8 +21,8 @@ blog:
     description: 从前以后过去了再不来                          # 博客描述
     title: HelKyle                                         # 网页标题
     url: https://github.com/HelKyle                        # 博客地址
-    duoshuo:                                        # 多说ID 
-    tongji:              # 百度统计ID
+    duoshuo:Joueu周大楷                                        # 多说ID 
+    tongji:joueu              # 百度统计ID
     qiniu:                                               # 七牛云地址
 author:
     name: HelKyle                                        # 作者名称
