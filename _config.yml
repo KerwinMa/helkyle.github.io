@@ -22,7 +22,7 @@ blog:
     title: HelKyle                                         # 网页标题
     url: https://github.com/HelKyle                      # 博客地址
     duoshuo: Joueu周大楷                                  # 多说ID 
-    tongji: joueu                                        # 百度统计ID
+    tongji: 950cb0948af29951cebc8bff62f400cd           # 百度统计ID
     qiniu: joueu@sina.com                                # 七牛云地址
 author:
     name: HelKyle                                        # 作者名称
