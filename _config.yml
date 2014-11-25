@@ -18,7 +18,7 @@ shTheme: shThemeDefault # shThemeDefault  shThemeDjango  shThemeEclipse  shTheme
 
 blog:
     name: HelKyle                                        # 博客名称
-    description: 从前以后过去了再不来                          # 博客描述
+    description: 从前以后过去了再不来                       # 博客描述1
     title: HelKyle                                         # 网页标题
     url: https://github.com/HelKyle                      # 博客地址
     duoshuo: Joueu周大楷                                  # 多说ID 
