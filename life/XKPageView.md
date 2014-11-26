@@ -1,0 +1,4 @@
+---
+layout: life
+title: XKPageView
+---
