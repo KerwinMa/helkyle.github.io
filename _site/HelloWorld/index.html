@@ -33,7 +33,7 @@ break;
 //-->
 
 </SCRIPT>
-
+<!--
 <SCRIPT language="JavaScript"><!--
 var expdate=new Date();
 var visits;//以下设置COOKIES时间为1年,自己随便设置该时间..
@@ -46,40 +46,7 @@ document.write("访问："+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");
 //-->
 </SCRIPT>
 
-
-
-
-
-
- <script type="text/javascript">
-    function setTimeSpan(){
-      var date = new Date();
-      timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
-    }
-    
-    Date.prototype.format = function(format)
-    {
-    var o =
-      {
-          "M+" : this.getMonth()+1, //month
-          "d+" : this.getDate(),    //day
-          "h+" : this.getHours(),   //hour
-          "m+" : this.getMinutes(), //minute
-          "s+" : this.getSeconds(), //second
-          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
-          "S" : this.getMilliseconds() //millisecond
-      }
-      if(/(y+)/.test(format))
-      format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
-      for(var k in o)
-      if(new RegExp("("+ k +")").test(format))
-      format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
-      return format;
-    }
-  </script>
-
-
-  <body onLoad="setInterval(setTimeSpan,1000);">
+  <body >
     <div id="container">
       <div id="main" role="main">
         <header>
@@ -167,7 +134,19 @@ document.write("访问："+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");
     <footer>
         <p><small>
             <a href="http://github.com/helkyle/NET/new/gh-pages/_posts" target="_blank" title="撰写文章">Po</a>wer<a href="http://github.com/helkyle/NET/edit/gh-pages/_posts/2014-11-24-HelloWorld.md" target="_blank" title="编辑页面">ed</a> by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> @ <a href="http://github.com/helkyle/NET" target="_blank" title="项目主页">GitHub</a>
-             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2014 - 2014 <a href="/about/">helkyle | <span class="label label-info" id="timeSpan"></span> </a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2014 - 2014 <a href="/about/">helkyle  
+
+        <SCRIPT language="JavaScript"><!--
+        var expdate=new Date();
+        var visits;//以下设置COOKIES时间为1年,自己随便设置该时间..
+        expdate.setTime(expdate.getTime()+(24*60*60*1000*365));
+
+        if(!(visits=GetCookie("visits")))
+
+        visits=0;visits++;SetCookie("visits",visits,expdate,"/",null,false);//以下信息显示可以使用标准的HTML语法,自己随便设置。
+        document.write("访问："+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");
+        //-->
+    </SCRIPT> </a>
 <!--
              | <a href="http://www.miibeian.gov.cn" target="_blank">950cb0948af29951cebc8bff62f400cd</a>
  -->
