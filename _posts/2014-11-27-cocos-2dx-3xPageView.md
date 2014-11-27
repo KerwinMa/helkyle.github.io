@@ -3,6 +3,7 @@ layout: post
 title: cocos 2dx 3.x实现的PageView
 category: cocos2dx
 date: 2014-11-27
+tags: 技术
 ---
 ###转载请注明出处：   
 * [http://helkyle.tk/cocos-2dx-3xPageView/][1]
