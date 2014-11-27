@@ -6,7 +6,7 @@ date: 2014-11-27
 ---
 ###转载请注明出处：   
 * [http://helkyle.tk/blog/2014/11/27/cocos-2dx-3xPageView.html][1]
-* [http://blog.csdn.net/joueu][2]  
+* [http://blog.csdn.net/joueu/article/details/41532763][2]  
 
 > 之前使用PageView 觉得用起来好像不太爽，没办法达到我想要实现的功能，又不想修改源码。最近闲得蛋疼就花了半天时间捣鼓一个出来，就命名叫XKPageView吧，XK嘛...大家好像都这么命名~  
 > 废话不多说，先看显示效果  
@@ -392,5 +392,5 @@ date: 2014-11-27
 >[http://download.csdn.net/detail/joueu/8202549][3]
 
 [1]:http://helkyle.tk/blog/2014/11/27/cocos-2dx-3xPageView.html
-[2]:http://blog.csdn.net/joueu
+[2]:http://blog.csdn.net/joueu/article/details/41532763
 [3]:http://download.csdn.net/detail/joueu/8202549
