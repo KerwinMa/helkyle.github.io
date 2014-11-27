@@ -1,35 +1,16 @@
-markdown: kramdown
-highlighter: pygments
-permalink: blog/:year/:month/:day/:title.html
-paginate: 7	
-paginate_path: page/:num
-
-# Build settings
-# markdown: redcarpet
-# redcarpet:
-#     extensions: ["fenced_code_blocks", "tables", "highlight", "strikethrough"]
-
-#SyntaxHihglighter config start
-
-SyntaxHihglighter: false
-shTheme: shThemeDefault # shThemeDefault  shThemeDjango  shThemeEclipse  shThemeEmacs  shThemeFadeToGrey  shThemeMidnight  shThemeRDark
-
-#SyntaxHihglighter config end
-
-blog:
-    name: HelKyle                                        # 博客名称
-    description: 从前以后过去了再不来                       # 博客描述1
-    title: HelKyle                                         # 网页标题
-    url: https://github.com/HelKyle                      # 博客地址
-    duoshuo: helkyle                                           # 多说ID 
-    tongji: 950cb0948af29951cebc8bff62f400cd           # 百度统计ID
-    qiniu: joueu@sina.com                                # 七牛云地址
-author:
-    name: HelKyle                                        # 作者名称
-    email: zhouxk@koalac.com                             # 邮箱地址
-    weibo: http://weibo.com/joueu                        # 微博地址
-    github: https://github.com/HelKyle                   # GitHub地址
-    logo: /res/img/icon.jpg                              # logo地址
-    douban: 
-        name:                                            # 豆瓣地址名称
-        key:                                             # 豆瓣API Key
+markdown: rdiscount
+permalink: /:title/
+url: helkyle.tk
+name: helkyle.tk
+author: helkyle
+qq: 306295636
+email: 306295636@qq.com
+duoshuo: helkyle
+beian: 浙ICP备12026616号
+tongji: 950cb0948af29951cebc8bff62f400cd           # 百度统计ID
+weibo: www.weibo.com/joueu
+github: helkyle
+highlighter: true
+safe: true
+paginate: 20
+about: "这里是 helkyle 的个人博客，之前那个太花哨了~"
