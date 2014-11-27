@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta name="description" content="">
   <meta name="author" content="">
-  <meta name="keywords" content=", , , ">
-  <title></title>
-  <link rel="canonical" href="">
+  <meta name="keywords" content="阅读, , ">
+  <title>阅读 - </title>
+  <link rel="canonical" href="/page/read.html">
   <link rel="icon" href="/res/img/favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="/res/img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/res/css/public.css">
@@ -56,61 +56,14 @@
   </div>
 </div>
     <div class="main">
+    <style>.main{padding-right:0;}.douban-title{color:#1BAF69;margin-bottom:-20px;text-shadow:0 0 1px;letter-spacing:3px;}.douban-list{margin-left:-40px;}.douban-list ul li{list-style:none outside none;width:115px;margin-top:20px;float:left;}.douban-list ul li img{width:90px;height:120px;border:solid 1px #DDD;padding:1px;}.clear{clear:both;}@media (max-width:875px){.douban-title{letter-spacing:1px;margin-bottom:-15px;}.douban-list{margin-left:-37px;}.douban-list ul li{width:100px;margin-top:5px;}}</style>
+<div id="archives">
+  <div id="douban"></div>
+</div>
+<br/><br/>
+<script>function DoubanApi(){this.defaults={place:"douban",user:"",api:"",book:[{status:"reading",maxnum:20},{status:"read",maxnum:100},{status:"wish",maxnum:100}],bookreadingtitle:"在读...",bookreadtitle:"读过...",bookwishtitle:"想读..."}};DoubanApi.prototype.make_api_url=function(type,user,key,status,begin,end){var url="http://api.douban.com/people/"+user+"/collection?cat="+type+"&start-index="+begin+"&max-results="+end+"&status="+status+"&alt=xd&callback=dbapi."+type+status+"_show"+"&apikey="+key;return url;};DoubanApi.prototype.make_list_item=function(items){var html='';$.each(items,function(i,item){html+='<li><a href="'+item.link+'" target="_blank"><img src="'+item.src+'" alt="'+item.title+'" title="'+item.title+'" /></a></li>'});return html};DoubanApi.prototype.parse_json=function(json){var items=[];$.each(json.entry,function(i,item){var link={};link.title=item["db:subject"]["title"]["$t"];link.link=item["db:subject"]["link"][1]["@href"];link.src=item["db:subject"]["link"][2]["@href"];items.push(link)});return items};DoubanApi.prototype.fix_num=function(num){var index=1;var fixnums=[];if(50>num&&num>0){fixnums.push({begin:index,end:num})}else{while(num>0){fixnums.push({begin:index,end:index+49});num-=50;index+=50}}return fixnums};DoubanApi.prototype.show=function(){var books=[];var tmpthis=this;$.each(this.defaults.book,function(i,item){var fixnums=tmpthis.fix_num(item.maxnum);books.push({status:item.status,indexs:fixnums})});$.each(books,function(i,item){$.each(item.indexs,function(t,idx){tmpthis.appendScript(tmpthis.all_url("book",item.status,idx.begin,idx.end))})})};DoubanApi.prototype.appendScript=function(url){if(url&&url.length>0){$("<script/>").attr("src",url).attr("charset","utf-8").appendTo($("head")[0])}};DoubanApi.prototype.all_url=function(type,status,begin,end){if(end===0)return;if(!this[type+status+"_show"]){this[type+status+"_show"]=function(json){var mainplace=$("#"+this.defaults.place);if(mainplace.length===0){mainplace=$('<div id="'+this.defaults.place+'"></div>').prependTo($("body"))}if($("#"+type+status).length===0){var title=this.defaults[type+status+"title"];$('<h3 class="douban-title">'+title+'</h3>').appendTo(mainplace);$('<div id="'+type+status+'" class="douban-list"><ul></ul></div>').appendTo(mainplace);$('<div class="clear"></div>').appendTo(mainplace)}$("#"+type+status+" > ul").append(this.make_list_item(this.parse_json(json)))}}return this.make_api_url(type,this.defaults.user,this.defaults.api,status,begin,end)};var dbapi=new DoubanApi();$(document).ready(function(){dbapi.show()});</script>
+
     
-<div class="posts">
-  <section class="post">
-    <header class="post-header">
-      <h1 class="post-title"><a href="/Run/">总有一天</a></h1>
-      <p class="post-meta">
-        <i class="fa fa-calendar"></i>
-        2014年11月24日
-        <i class="space"></i>
-        <i class="fa fa-tags"></i>
-        <a class="post-category" href="/page/category.html#白日梦">白日梦</a>
-      </p>
-    </header>
-    <div class="post-main">
-      <p>总有一天我要过我想要的生活!!!
-<img src="/res/img/20141122.jpg" alt="img" /></p>
-
-      <div class="readall"><a href="/Run/" id="post-readall">阅读全文&nbsp;<i class="fa fa-chevron-right"></i></a></div>
-    </div>
-  </section>
-</div>
-
-<div class="posts">
-  <section class="post">
-    <header class="post-header">
-      <h1 class="post-title"><a href="/HelloWorld/">大话西游</a></h1>
-      <p class="post-meta">
-        <i class="fa fa-calendar"></i>
-        2014年11月24日
-        <i class="space"></i>
-        <i class="fa fa-tags"></i>
-        <a class="post-category" href="/page/category.html#白日梦">白日梦</a>
-      </p>
-    </header>
-    <div class="post-main">
-      <p><code>我知道有一天他会在一个万众嘱目的情况下出现，身披金甲圣衣，脚踏七彩云来娶我！ </code><br/>
-<img src="/res/img/%E5%A4%A7%E8%AF%9D%E8%A5%BF%E6%B8%B8.jpeg" alt="zixia" /></p>
-
-<p><code>他活得好像条狗!</code><br/>
-<img src="/res/img/likeadog.jpg" alt="likeadog" /></p>
-
-      <div class="readall"><a href="/HelloWorld/" id="post-readall">阅读全文&nbsp;<i class="fa fa-chevron-right"></i></a></div>
-    </div>
-  </section>
-</div>
-
-<div class="pagination">
-  
-  <span class="pagination-item newer"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;上一页</span>
-    
-  
-  <span class="pagination-item older">下一页&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></span>
-  
-</div>
-    <footer>Copyright&nbsp;&copy;&nbsp;2014 <a href=""></a><br/><i class="fa fa-cogs" style="color:blueviolet;">&nbsp;</i>Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a></footer>
     </div>
   </div>    
   <div id="top"><a id="rocket" href="javascript:;" title="返回顶部"><i></i></a></div>
