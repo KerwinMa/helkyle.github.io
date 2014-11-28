@@ -16,7 +16,17 @@
 
   
   <!-- baidu tongji -->
-  {% include tongji.html %}
+  <!-- {% include tongji.html %} -->
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?{{ site.tongji }}";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
   
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}public/css/poole.css">
