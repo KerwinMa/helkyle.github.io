@@ -11,41 +11,6 @@
     <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
   </head>
 
-
-
-
-<!--脚本说明:
-把如下代码加入<body>区域中-->
-<SCRIPT language="JavaScript"><!--
-function getCookieVal(offset)
-{var endstr=document.cookie.indexOf(";",offset);if(endstr==-1)
-endstr=document.cookie.length;return unescape(document.cookie.substring(offset,endstr));}function GetCookie(name)
-{var arg=name+"=";var alen=arg.length;var clen=document.cookie.length;var i=0;while(i<clen)
-{var j=i+alen;if(document.cookie.substring(i,j)==arg)
-return getCookieVal(j);i=document.cookie.indexOf(" ",i)+1;if(i==0)
-break;
-}return null;}function SetCookie(name,value)
-
-
-{var argv=SetCookie.arguments;var argc=SetCookie.arguments.length;var expires=(2<argc)?argv[2]:null;var path=(3<argc)?argv[3]:null;var domain=(4<argc)?argv[4]:null;var secure=(5<argc)?argv[5]:false;document.cookie=name+"="+escape(value)+((expires==null)?"":("; expires="+expires.toGMTString()))+((path==null)?"":("; path="+path))+((domain==null)?"":("; domain="+domain))+((secure==true)?"; secure":"");}function ResetCounts(name)
-
-{visits=0;SetCookie("visits",visits,expdate,"/",null,false);location.reload();}
-//-->
-
-</SCRIPT>
-<!--
-<SCRIPT language="JavaScript"><!--
-var expdate=new Date();
-var visits;//以下设置COOKIES时间为1年,自己随便设置该时间..
-expdate.setTime(expdate.getTime()+(24*60*60*1000*365));
-
-if(!(visits=GetCookie("visits")))
-
-visits=0;visits++;SetCookie("visits",visits,expdate,"/",null,false);//以下信息显示可以使用标准的HTML语法,自己随便设置。
-document.write("访问："+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");
-//-->
-</SCRIPT>
-
   <body >
     <div id="container">
       <div id="main" role="main">
@@ -134,19 +99,7 @@ document.write("访问："+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");
     <footer>
         <p><small>
             <a href="http://github.com/helkyle/NET/new/gh-pages/_posts" target="_blank" title="撰写文章">Po</a>wer<a href="http://github.com/helkyle/NET/edit/gh-pages/_posts/2014-11-24-HelloWorld.md" target="_blank" title="编辑页面">ed</a> by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> @ <a href="http://github.com/helkyle/NET" target="_blank" title="项目主页">GitHub</a>
-             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2014 - 2014 <a href="/about/">helkyle  
-
-        <SCRIPT language="JavaScript"><!--
-        var expdate=new Date();
-        var visits;//以下设置COOKIES时间为1年,自己随便设置该时间..
-        expdate.setTime(expdate.getTime()+(24*60*60*1000*365));
-
-        if(!(visits=GetCookie("visits")))
-
-        visits=0;visits++;SetCookie("visits",visits,expdate,"/",null,false);//以下信息显示可以使用标准的HTML语法,自己随便设置。
-        document.write("访问："+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");
-        //-->
-    </SCRIPT> </a>
+             | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2014 - 2014 <a href="/about/">helkyle  </a>
 <!--
              | <a href="http://www.miibeian.gov.cn" target="_blank">950cb0948af29951cebc8bff62f400cd</a>
  -->
