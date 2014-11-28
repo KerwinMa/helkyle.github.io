@@ -1,16 +1,32 @@
-markdown: rdiscount
-permalink: /:title/
-url: helkyle.tk
-name: helkyle.tk
-author: helkyle
-qq: 306295636
-email: zhouxk@koalac.com
+# Dependencies
+markdown:            redcarpet
+highlighter:         pygments
+
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
+
+# Setup
+title:               HelKyle
+tagline:             "  这不是bug."
+description:         一头程序猿
+url:                 http://HelKyle.github.io
+baseurl:             /
+paginate:            5
+# google_analytics_id: UA-56228338-1
+
+# About/contact
+author:
+  name:              HelKyle
+  url:               HelKyle.tk
+  email:             zhouxk@koalac.com
+# Custom vars
+version:             1.0.0
+
+gems:
+  - jekyll-sitemap
+
 duoshuo: helkyle
-beian: 浙ICP备12026616号
-tongji: 950cb0948af29951cebc8bff62f400cd           # 百度统计ID
-weibo: www.weibo.com/joueu
-github: helkyle
-highlighter: true
-safe: true
-paginate: 20
-about: "这里是 helkyle 的个人博客，之前那个太花哨了~"
+tongji: 950cb0948af29951cebc8bff62f400cd 

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      cocos 2dx 3.x实现的PageView &middot; HelKyle
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <!-- Load Google fonts asynchroneously -->
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'PT+Serif:400,700,400italic:latin', 'PT+Sans:400:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png?v=2">
+  <link rel="shortcut icon" href="/public/favicon.ico?v=2">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?950cb0948af29951cebc8bff62f400cd";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+</head>
+
+  <body class="theme-base-08">
+    <!-- Google analytics tracking -->
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>一头程序猿</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">首页</a>
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">关于</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archives/">博文</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/categorys/">分类</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/guestbook/">留言</a>
+        
+      
+    
+    <a class="sidebar-nav-item" href="http://aevit.github.io">友情链接</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2014. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">HelKyle</a>
+            <small>  这不是bug.</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <!-- <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?950cb0948af29951cebc8bff62f400cd";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+ -->
+
+	
+	<div class="ds-thread" />
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"helkyle"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<div class="post">
+  <h1 class="post-title">cocos 2dx 3.x实现的PageView</h1>
+  <span class="post-date">27 Nov 2014</span>
+  <h3>转载请注明出处：</h3>
+
+<ul>
+<li><a href="http://helkyle.tk/cocos-2dx-3xPageView/">http://helkyle.tk/cocos-2dx-3xPageView/</a></li>
+<li><a href="http://blog.csdn.net/joueu/article/details/41532763">http://blog.csdn.net/joueu/article/details/41532763</a><br></li>
+</ul>
+
+<blockquote>
+<p>之前使用PageView 觉得用起来好像不太爽，没办法达到我想要实现的功能，又不想修改源码。最近闲得蛋疼就花了半天时间捣鼓一个出来，就命名叫XKPageView吧，XK嘛...大家好像都这么命名~<br>
+废话不多说，先看显示效果<br>
+<img src="/public/images/cocos-2dx_3x_PageView/test.gif" alt="&quot;test&quot;"></p>
+
+<p>因为是在模拟器上录像的，所以看上去会有点卡...真机测试就不会了。
+（编号为5那个怎么会那么大嗟？) 看代码...</p>
+</blockquote>
+
+<hr>
+
+<p>我直接上代码啦，代码里面都有注释了，一些太简单的东西就不多啰嗦。如果有问题的话可以留言问我哈~
+,没有时间测试那么多...所以可能会有不少bug</p>
+
+<p>PageView.h</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">//  XKPageView.h
+//  XKPageView
+//
+//  Created by Joueu on 14-11-26.
+//
+//
+
+#ifndef __XKPageView__XKPageView__
+#define __XKPageView__XKPageView__
+
+#include &quot;cocos2d.h&quot;
+#include &quot;cocos-ext.h&quot;
+
+USING_NS_CC;
+USING_NS_CC_EXT;
+
+class XKPageView;
+class XKPageViewDelegate
+{
+public:
+
+    virtual ~XKPageViewDelegate(){};
+    XKPageViewDelegate(){};
+    virtual Size sizeForPerPage() = 0;
+    virtual void pageViewDidScroll(XKPageView *pageView){};
+};
+
+class XKPageView:public ScrollView
+{
+public:
+    static XKPageView *create(Size size,XKPageViewDelegate *delegate);
+    virtual bool init(Size size,XKPageViewDelegate *delegate);
+public:
+    void setPageSize(Size size);
+    virtual void setContentOffsetInDuration(Vec2 offset, float dt);
+    virtual void setContentOffset(Vec2 offset);
+private:
+    void performedAnimatedScroll(float dt);
+    int current_index;
+    float current_offset;
+    //调整offset 的函数
+    void adjust(float offset);
+    Size pageSize;
+    CC_SYNTHESIZE(XKPageViewDelegate *, _delegate, Delegate);
+public:
+    int pageCount;
+    void addPage(Node *node);
+    Node *getPageAtIndex(int index);
+};
+
+#endif /* defined(__XKPageView__XKPageView__) */
+</code></pre></div>
+<p>XKPageView.cpp</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">//
+//  XKPageView.cpp
+//  XKPageView
+//
+//  Created by Joueu on 14-11-26.
+//
+//
+
+#include &quot;XKPageView.h&quot;
+
+#define XKPAGEVIEW_TAG 10086
+
+XKPageView *XKPageView::create(Size size,XKPageViewDelegate *delegate)
+{
+    XKPageView *page = new XKPageView();
+    if (page &amp;&amp; page -&gt; init(size,delegate)) {
+        page -&gt; autorelease();
+    }else {
+        CC_SAFE_RELEASE(page);
+    }
+    return  page;
+}
+
+bool XKPageView::init(Size size,XKPageViewDelegate *delegate)
+{
+    if (!ScrollView::initWithViewSize(size)) {
+        return false;
+    }
+    //必须有delegate，否则断掉
+    CCASSERT(delegate, &quot;delegate should not be NULL!&quot;);
+    setDelegate(delegate);
+    if (_delegate) {
+        //获取page的大小
+        pageSize = _delegate -&gt; sizeForPerPage();
+    }
+    //init Data
+    pageCount = 0;
+    current_index = 0;
+
+this -&gt; setTouchEnabled(false);
+
+auto listener = EventListenerTouchOneByOne::create();
+listener -&gt; onTouchBegan = [&amp;](Touch *touch, Event *event){
+    _dragging = false;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        current_offset = this -&gt; getContentOffset().x;
+    }else {
+        current_offset = this -&gt; getContentOffset().y;
+    }
+    return true;
+};
+listener -&gt; onTouchMoved = [&amp;](Touch *touch, Event *event){
+    float start, end;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        start = touch -&gt; getStartLocation().x;
+        end = touch -&gt; getLocation().x;
+    }else {
+        start = touch -&gt; getStartLocation().y;
+        end = touch -&gt; getLocation().y;
+    }
+    float offset = end - start;
+    // * 2的作用是调节滚动速度，需要调滑动速度的 可以改这个值
+    if (_direction == ScrollView::Direction::HORIZONTAL)
+        this -&gt; setContentOffset(Vec2(current_offset + offset * 2, 0));
+    else
+        this -&gt; setContentOffset(Vec2(0, current_offset + offset * 2));
+};
+listener -&gt; onTouchEnded = [&amp;](Touch *touch, Event *event){
+    float start = current_offset, end;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        end = this -&gt; getContentOffset().x;
+    }else {
+        end = this -&gt; getContentOffset().y;
+    }
+    float offset = end - start;
+    this -&gt; adjust(offset);
+    _dragging = true;
+};
+Director::getInstance() -&gt; getEventDispatcher() -&gt; addEventListenerWithSceneGraphPriority(listener, this);
+return true;
+}
+
+
+void XKPageView::adjust(float offset)
+{
+    Vec2 vec;
+    float xOrY;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        vec = Vec2(-( current_index * (pageSize.width)),0);
+        xOrY = pageSize.width;
+    }else {
+        vec = Vec2(0, -( current_index * (pageSize.height)));
+        xOrY = pageSize.height;
+    }
+    //小于50回到原来位置
+    if  (abs(offset) &lt; 50){
+        this -&gt; setContentOffsetInDuration(vec,0.1f);
+        return;
+    }
+
+    int i = abs(offset / (xOrY)) + 1;
+    if (offset &lt; 0) {
+        current_index += i;
+    }else {
+        current_index -= i;
+    }
+
+    if (current_index &lt; 0) {
+        current_index = 0;
+    }else if(current_index &gt; 10){
+        current_index = 10;
+    }
+
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        vec = Vec2(-( current_index * (pageSize.width)),0);
+    }else {
+        vec = Vec2(0, -( current_index * (pageSize.height)));
+    }
+
+    this -&gt; setContentOffsetInDuration(vec, 0.15f);
+}
+
+void XKPageView::setContentOffset(Vec2 offset)
+{
+    ScrollView::setContentOffset(offset);
+    if (_delegate != nullptr)
+    {
+        _delegate -&gt; pageViewDidScroll(this);
+    }
+}
+
+void XKPageView::setContentOffsetInDuration(Vec2 offset, float dt)
+{
+    ScrollView::setContentOffsetInDuration(offset, dt);
+    this-&gt;schedule(CC_SCHEDULE_SELECTOR(XKPageView::performedAnimatedScroll));
+}
+
+void XKPageView::performedAnimatedScroll(float dt)
+{
+    if (_dragging)
+    {
+        this-&gt;unschedule(CC_SCHEDULE_SELECTOR(XKPageView::performedAnimatedScroll));
+        return;
+    }
+
+    if (_delegate != nullptr)
+    {
+        _delegate -&gt; pageViewDidScroll(this);
+    }
+}
+
+void XKPageView::addPage(Node *node)
+{
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        node -&gt; setPosition(Point(pageCount * pageSize.width + node -&gt; getPositionX(),node -&gt; getPositionY()));
+        this -&gt; setContentSize(Size((pageCount + 1) * pageSize.width,pageSize.height));
+    }else {
+        node -&gt; setPosition(Point(node -&gt; getPositionX(),pageCount * pageSize.height + node -&gt; getPositionY()));
+        this -&gt; setContentSize(Size(pageSize.width,(pageCount + 1) *pageSize.height));
+    }
+    node -&gt; setTag(pageCount + XKPAGEVIEW_TAG);
+    _container -&gt; addChild(node);
+    pageCount ++;
+
+}
+
+Node *XKPageView::getPageAtIndex(int index)
+{
+    if (index &lt; pageCount &amp;&amp; index &gt;= 0) {
+        return _container -&gt; getChildByTag(index + XKPAGEVIEW_TAG);
+    }
+    return  NULL;
+}
+</code></pre></div>
+<p>测试用的HelloWorld.h</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#ifndef __HELLOWORLD_SCENE_H__
+#define __HELLOWORLD_SCENE_H__  
+#include &quot;cocos2d.h&quot;
+#include &quot;cocos-ext.h&quot;
+#include &quot;XKPageView.h&quot;
+
+USING_NS_CC_EXT;
+
+class HelloWorld : public cocos2d::Layer, public XKPageViewDelegate
+{
+public:
+    // there&#39;s no &#39;id&#39; in cpp, so we recommend returning the class instance pointer
+    static cocos2d::Scene* createScene();
+
+    // Here&#39;s a difference. Method &#39;init&#39; in cocos2d-x returns bool, instead of returning &#39;id&#39; in cocos2d-iphone
+    virtual bool init();
+
+    // implement the &quot;static create()&quot; method manually
+    CREATE_FUNC(HelloWorld);
+
+    Layer *getContainer();
+
+    // PageViewDelegate
+    virtual Size sizeForPerPage();
+    virtual void pageViewDidScroll(XKPageView *pageView);
+private:
+    XKPageView *pageView;
+    void addPages();
+};
+
+#endif // __HELLOWORLD_SCENE_H__
+</code></pre></div>
+<p>HelloWorld.cpp</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#include &quot;HelloWorldScene.h&quot;
+USING_NS_CC;
+
+#define COIN_WIDTH 212
+#define COIN_GAP 30
+#define COIN_COUNT 11
+
+Scene* HelloWorld::createScene()
+{
+    // &#39;scene&#39; is an autorelease object
+    auto scene = Scene::create();
+
+    // &#39;layer&#39; is an autorelease object
+    auto layer = HelloWorld::create();
+
+    // add layer as a child to scene
+    scene-&gt;addChild(layer);
+
+    // return the scene
+    return scene;
+}
+
+// on &quot;init&quot; you need to initialize your instance
+bool HelloWorld::init()
+{
+    //////////////////////////////
+    // 1. super init first
+    if ( !Layer::init() )
+    {
+        return false;
+    }
+    Size visibleSize = Director::getInstance() -&gt; getVisibleSize();
+    //XKPageView::create(可视范围, XKPageViewDelegate, container);
+//    auto page = XKPageView::create(Size(visibleSize.width ,COIN_WIDTH), this, this -&gt; getContainer());
+    pageView = XKPageView::create(Size(visibleSize.width, COIN_WIDTH), this);
+    pageView -&gt; setDirection(ScrollView::Direction::HORIZONTAL);
+    //XKPageView的滚动区域
+//    page -&gt; setContentSize(Size((COIN_WIDTH + COIN_GAP)* COIN_COUNT ,COIN_WIDTH));
+    //container 定位在屏幕中间
+    pageView -&gt; setPosition(Point((visibleSize.width - COIN_WIDTH) * 0.5, (visibleSize.height - COIN_WIDTH) * 0.5));
+
+    addPages();
+    //设置裁切为false, 这样layer 溢出pageView的Size还能显示，只是为了演示效果而已~
+    pageView -&gt; setClippingToBounds(false);
+    this -&gt; addChild(pageView);
+
+    /*测试功能而已*/
+    Node *node = pageView -&gt; getPageAtIndex(5);
+    log(&quot;tag = %d&quot;,node -&gt; getTag());
+    node -&gt; setScale(1.3f);
+
+    return true;
+}
+
+void HelloWorld::addPages()
+{
+    Size coinSize = Sprite::create(&quot;coin.png&quot;) -&gt; getContentSize();
+    //11个layer 加到layer 上
+    for (int i = 0; i &lt; COIN_COUNT; i++) {
+        auto sprite = Sprite::create(&quot;coin.png&quot;);
+        sprite -&gt; setPosition(coinSize.width * 0.5, coinSize.height * 0.5);
+        std::string str = StringUtils::format(&quot;%d&quot;, i);
+        Label *label = Label::createWithSystemFont(str, &quot;Arial&quot;, 60);
+        label -&gt; setTextColor(Color4B(0,0,0,255));
+        Size size = sprite -&gt; getContentSize();
+        label -&gt; setPosition(size.width * 0.5, size.height * 0.5);
+        sprite -&gt; addChild(label);
+        pageView -&gt; addPage(sprite);
+    }
+}
+
+Layer *HelloWorld::getContainer()
+{
+    auto layer = Layer::create();
+    Size coinSize = Sprite::create(&quot;coin.png&quot;) -&gt; getContentSize();
+    //11个sprite 加到_container 上
+    for (int i = 0; i &lt; COIN_COUNT; i++) {
+        auto sprite = Sprite::create(&quot;coin.png&quot;);
+        sprite -&gt; setPosition(coinSize.width * 0.5 + i * (coinSize.width + COIN_GAP) , coinSize.height * 0.5);
+        layer -&gt; addChild(sprite);
+        std::string str = StringUtils::format(&quot;%d&quot;, i);
+        Label *label = Label::createWithSystemFont(str, &quot;Arial&quot;, 60);
+        label -&gt; setTextColor(Color4B(0,0,0,255));
+        Size size = sprite -&gt; getContentSize();
+        label -&gt; setPosition(size.width * 0.5, size.height * 0.5);
+        sprite -&gt; addChild(label);
+    }
+    return layer;
+}
+
+Size HelloWorld::sizeForPerPage()
+{
+    //Delegate 的东西，返回每个Page 的Size
+    return Size(COIN_WIDTH + COIN_GAP, COIN_WIDTH);
+}
+
+void HelloWorld::pageViewDidScroll(XKPageView *pageView)
+{
+    //监听滚动时间，可以再这里写滚动时候要添加的代码,比如缩放~
+    log(&quot;pageViewDidScroll&quot;);
+}
+</code></pre></div>
+<blockquote>
+<p><code>我把资源都放在CSDN上面了，需要的可以去下载~</code><br>
+<a href="http://download.csdn.net/detail/joueu/8202549">http://download.csdn.net/detail/joueu/8202549</a></p>
+</blockquote>
+
+</div>
+
+<div class="related">
+  <h3>HelKyle 的其他文章</h3>
+  <ul class="related-posts">
+    
+      <li>
+        <h5>
+          <a href="/cocos2dx/2014/11/27/pageview/">
+            进阶版Pageview
+            <small>27 Nov 2014</small>
+          </a>
+        </h5>
+      </li>
+    
+      <li>
+        <h5>
+          <a href="/%E7%99%BD%E6%97%A5%E6%A2%A6/2014/11/24/HelloWorld/">
+            大话西游
+            <small>24 Nov 2014</small>
+          </a>
+        </h5>
+      </li>
+    
+  </ul>
+</div>
+
+<div id="disqus_thread"></div>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

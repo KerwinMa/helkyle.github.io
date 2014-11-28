@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>HelKyle</title>
+ <link href="http://HelKyle.github.io/atom.xml" rel="self"/>
+ <link href="http://HelKyle.github.io/"/>
+ <updated>2014-11-28T17:22:36+08:00</updated>
+ <id>http://HelKyle.github.io</id>
+ <author>
+   <name>HelKyle</name>
+   <email>zhouxk@koalac.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>进阶版Pageview</title>
+   <link href="http://HelKyle.github.io/cocos2dx/2014/11/27/pageview/"/>
+   <updated>2014-11-27T00:00:00+08:00</updated>
+   <id>http://HelKyle.github.io/cocos2dx/2014/11/27/pageview</id>
+   <content type="html">&lt;blockquote&gt;
+&lt;p&gt;上篇介绍了，简单封装PageView 的基本实现。XKPageView基本实现了，PageView 的功能，就可能用来实现上篇说的使用系统自带PageView实现不了的功能了(有点绕~)&lt;br&gt;
+ 同样地，我们先来看看使用效果图：&lt;br&gt;
+ &lt;img src=&quot;/public/images/cocos-2dx_3x_PageView/test2.gif&quot; alt=&quot;test&quot;&gt;&lt;br&gt;
+ 进阶使用XKPageView，主要用到了我们上篇说到的XKPageViewDelegate 的PageViewDidScroll函数，监听滚动事件。   滚动过程中计算金币缩放大小，还有 透明度设置。然后新增加了这个回调函数  &lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;        std::function&amp;lt;void(XKPageView *)&amp;gt; adjustCallback  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;(学过ios的同学就不能理解了，其实就是 block啦，这东西很好用哈。)
+ adjustCallback的作用就是当PageView自动调整的时候执行的代码块，由于我们使用的是系统的setContentOffsetInDuration,所以很难再在里面同步执行动作了。所以就使用这种方法,效果还不错。&lt;br&gt;
+ 这里就贴一下，实现滑动和自动调整位置时改变大小和透明度的代码吧。&lt;br&gt;
+ &lt;code&gt;自动调节时的代码&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;   pageView -&amp;gt; adjustCallback = [](XKPageView *pageView){
+       FiniteTimeAction *fadeIn = FadeTo::create(0.15, 255);
+       FiniteTimeAction *fadeOut = FadeTo::create(0.15, 255 * 0.3);
+       FiniteTimeAction *scaleToBig = ScaleTo::create(0.15, 1.5f);
+       FiniteTimeAction *scaleToSmall = ScaleTo::create(0.15, 1.0f);
+
+    Spawn *spawnIn = Spawn::createWithTwoActions(fadeIn, scaleToBig);
+       Spawn *spawnOut = Spawn::createWithTwoActions(fadeOut, scaleToSmall);
+
+       int current = pageView -&amp;gt; getCurrentIndex();
+       auto sprite = (Sprite*) pageView -&amp;gt; getPageAtIndex(current);
+       sprite -&amp;gt; runAction(spawnIn);
+
+       sprite = (Sprite *)pageView -&amp;gt; getPageAtIndex(current - 1);
+       if (sprite !=NULL){
+           sprite -&amp;gt; runAction(spawnOut);
+       }
+       sprite = (Sprite *)pageView -&amp;gt; getPageAtIndex(current + 1);
+       if (sprite !=NULL){
+           sprite -&amp;gt; runAction(spawnOut -&amp;gt; clone());
+       }
+   };  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;滑动时代码&lt;/code&gt;   &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    void HelloWorld::pageViewDidScroll(XKPageView *pageView)
+{
+    //监听滚动时间，可以再这里写滚动时候要添加的代码,比如缩放~
+    Size visibleSize = Director::getInstance() -&amp;gt; getVisibleSize();
+    float midX = visibleSize.width / 2;
+    float offsetX = pageView -&amp;gt; getContentOffset().x;
+    float tmp = COIN_WIDTH / 2.0f;
+    float scale = 1.5;
+    scale = scale - 1;
+
+
+    for (int i = 0; i &amp;lt; COIN_COUNT; i++) {
+        auto sprite = (Sprite *) pageView -&amp;gt; getPageAtIndex(i);
+        float positionX = sprite -&amp;gt; getPositionX();
+        //转换成相对屏幕坐标
+        float endX = positionX + offsetX + midX - tmp;
+        if (0 &amp;lt; endX &amp;amp;&amp;amp; endX &amp;lt;= midX) {
+        //midX左边
+            float x = endX / midX * scale + 1;
+            sprite -&amp;gt; setScale(x);
+            x = (endX / midX * 0.7 + 0.3) * 255;
+            sprite -&amp;gt; setOpacity(x);
+        }else if(endX &amp;gt; midX &amp;amp;&amp;amp; endX &amp;lt; visibleSize.width){
+        //midX右边
+            float tmp2 = endX - midX;
+            tmp2 = midX - tmp2;
+            float x = tmp2 / midX * scale + 1;
+            sprite -&amp;gt; setScale(x);
+
+            x = (tmp2 / midX * 0.7 + 0.3) * 255;
+            sprite -&amp;gt; setOpacity(x);
+        }else {
+            sprite -&amp;gt; setScale(1.0f);
+            sprite -&amp;gt; setOpacity(255 * 0.3);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这次就不放到CSDN上了，直接放在&lt;a href=&quot;https://github.com/HelKyle/XKPageView.git&quot;&gt;github&lt;/a&gt;上，需要的同学可以去下载...(需要翻墙)&lt;br&gt;
+由于对底层技术了解较少，避免不了会有bug，如果有问题，请一定要告诉我~&lt;br&gt;
+我的个人博客：&lt;a href=&quot;http://helkyle.tk&quot;&gt;helkyle.tk&lt;/a&gt;&lt;br&gt;
+我的CSDN博客:&lt;a href=&quot;http://blog.csdn.net/joueu&quot;&gt;http://blog.csdn.net/joueu&lt;/a&gt;&lt;br&gt;
+转载请注明出处，谢谢~&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>cocos 2dx 3.x实现的PageView</title>
+   <link href="http://HelKyle.github.io/cocos2dx/2014/11/27/cocos-2dx-3xPageView/"/>
+   <updated>2014-11-27T00:00:00+08:00</updated>
+   <id>http://HelKyle.github.io/cocos2dx/2014/11/27/cocos-2dx-3xPageView</id>
+   <content type="html">&lt;h3&gt;转载请注明出处：&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://helkyle.tk/cocos-2dx-3xPageView/&quot;&gt;http://helkyle.tk/cocos-2dx-3xPageView/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/joueu/article/details/41532763&quot;&gt;http://blog.csdn.net/joueu/article/details/41532763&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;之前使用PageView 觉得用起来好像不太爽，没办法达到我想要实现的功能，又不想修改源码。最近闲得蛋疼就花了半天时间捣鼓一个出来，就命名叫XKPageView吧，XK嘛...大家好像都这么命名~&lt;br&gt;
+废话不多说，先看显示效果&lt;br&gt;
+&lt;img src=&quot;/public/images/cocos-2dx_3x_PageView/test.gif&quot; alt=&quot;&amp;quot;test&amp;quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;因为是在模拟器上录像的，所以看上去会有点卡...真机测试就不会了。
+（编号为5那个怎么会那么大嗟？) 看代码...&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;我直接上代码啦，代码里面都有注释了，一些太简单的东西就不多啰嗦。如果有问题的话可以留言问我哈~
+,没有时间测试那么多...所以可能会有不少bug&lt;/p&gt;
+
+&lt;p&gt;PageView.h&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;//  XKPageView.h
+//  XKPageView
+//
+//  Created by Joueu on 14-11-26.
+//
+//
+
+#ifndef __XKPageView__XKPageView__
+#define __XKPageView__XKPageView__
+
+#include &amp;quot;cocos2d.h&amp;quot;
+#include &amp;quot;cocos-ext.h&amp;quot;
+
+USING_NS_CC;
+USING_NS_CC_EXT;
+
+class XKPageView;
+class XKPageViewDelegate
+{
+public:
+
+    virtual ~XKPageViewDelegate(){};
+    XKPageViewDelegate(){};
+    virtual Size sizeForPerPage() = 0;
+    virtual void pageViewDidScroll(XKPageView *pageView){};
+};
+
+class XKPageView:public ScrollView
+{
+public:
+    static XKPageView *create(Size size,XKPageViewDelegate *delegate);
+    virtual bool init(Size size,XKPageViewDelegate *delegate);
+public:
+    void setPageSize(Size size);
+    virtual void setContentOffsetInDuration(Vec2 offset, float dt);
+    virtual void setContentOffset(Vec2 offset);
+private:
+    void performedAnimatedScroll(float dt);
+    int current_index;
+    float current_offset;
+    //调整offset 的函数
+    void adjust(float offset);
+    Size pageSize;
+    CC_SYNTHESIZE(XKPageViewDelegate *, _delegate, Delegate);
+public:
+    int pageCount;
+    void addPage(Node *node);
+    Node *getPageAtIndex(int index);
+};
+
+#endif /* defined(__XKPageView__XKPageView__) */
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;XKPageView.cpp&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;//
+//  XKPageView.cpp
+//  XKPageView
+//
+//  Created by Joueu on 14-11-26.
+//
+//
+
+#include &amp;quot;XKPageView.h&amp;quot;
+
+#define XKPAGEVIEW_TAG 10086
+
+XKPageView *XKPageView::create(Size size,XKPageViewDelegate *delegate)
+{
+    XKPageView *page = new XKPageView();
+    if (page &amp;amp;&amp;amp; page -&amp;gt; init(size,delegate)) {
+        page -&amp;gt; autorelease();
+    }else {
+        CC_SAFE_RELEASE(page);
+    }
+    return  page;
+}
+
+bool XKPageView::init(Size size,XKPageViewDelegate *delegate)
+{
+    if (!ScrollView::initWithViewSize(size)) {
+        return false;
+    }
+    //必须有delegate，否则断掉
+    CCASSERT(delegate, &amp;quot;delegate should not be NULL!&amp;quot;);
+    setDelegate(delegate);
+    if (_delegate) {
+        //获取page的大小
+        pageSize = _delegate -&amp;gt; sizeForPerPage();
+    }
+    //init Data
+    pageCount = 0;
+    current_index = 0;
+
+this -&amp;gt; setTouchEnabled(false);
+
+auto listener = EventListenerTouchOneByOne::create();
+listener -&amp;gt; onTouchBegan = [&amp;amp;](Touch *touch, Event *event){
+    _dragging = false;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        current_offset = this -&amp;gt; getContentOffset().x;
+    }else {
+        current_offset = this -&amp;gt; getContentOffset().y;
+    }
+    return true;
+};
+listener -&amp;gt; onTouchMoved = [&amp;amp;](Touch *touch, Event *event){
+    float start, end;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        start = touch -&amp;gt; getStartLocation().x;
+        end = touch -&amp;gt; getLocation().x;
+    }else {
+        start = touch -&amp;gt; getStartLocation().y;
+        end = touch -&amp;gt; getLocation().y;
+    }
+    float offset = end - start;
+    // * 2的作用是调节滚动速度，需要调滑动速度的 可以改这个值
+    if (_direction == ScrollView::Direction::HORIZONTAL)
+        this -&amp;gt; setContentOffset(Vec2(current_offset + offset * 2, 0));
+    else
+        this -&amp;gt; setContentOffset(Vec2(0, current_offset + offset * 2));
+};
+listener -&amp;gt; onTouchEnded = [&amp;amp;](Touch *touch, Event *event){
+    float start = current_offset, end;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        end = this -&amp;gt; getContentOffset().x;
+    }else {
+        end = this -&amp;gt; getContentOffset().y;
+    }
+    float offset = end - start;
+    this -&amp;gt; adjust(offset);
+    _dragging = true;
+};
+Director::getInstance() -&amp;gt; getEventDispatcher() -&amp;gt; addEventListenerWithSceneGraphPriority(listener, this);
+return true;
+}
+
+
+void XKPageView::adjust(float offset)
+{
+    Vec2 vec;
+    float xOrY;
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        vec = Vec2(-( current_index * (pageSize.width)),0);
+        xOrY = pageSize.width;
+    }else {
+        vec = Vec2(0, -( current_index * (pageSize.height)));
+        xOrY = pageSize.height;
+    }
+    //小于50回到原来位置
+    if  (abs(offset) &amp;lt; 50){
+        this -&amp;gt; setContentOffsetInDuration(vec,0.1f);
+        return;
+    }
+
+    int i = abs(offset / (xOrY)) + 1;
+    if (offset &amp;lt; 0) {
+        current_index += i;
+    }else {
+        current_index -= i;
+    }
+
+    if (current_index &amp;lt; 0) {
+        current_index = 0;
+    }else if(current_index &amp;gt; 10){
+        current_index = 10;
+    }
+
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        vec = Vec2(-( current_index * (pageSize.width)),0);
+    }else {
+        vec = Vec2(0, -( current_index * (pageSize.height)));
+    }
+
+    this -&amp;gt; setContentOffsetInDuration(vec, 0.15f);
+}
+
+void XKPageView::setContentOffset(Vec2 offset)
+{
+    ScrollView::setContentOffset(offset);
+    if (_delegate != nullptr)
+    {
+        _delegate -&amp;gt; pageViewDidScroll(this);
+    }
+}
+
+void XKPageView::setContentOffsetInDuration(Vec2 offset, float dt)
+{
+    ScrollView::setContentOffsetInDuration(offset, dt);
+    this-&amp;gt;schedule(CC_SCHEDULE_SELECTOR(XKPageView::performedAnimatedScroll));
+}
+
+void XKPageView::performedAnimatedScroll(float dt)
+{
+    if (_dragging)
+    {
+        this-&amp;gt;unschedule(CC_SCHEDULE_SELECTOR(XKPageView::performedAnimatedScroll));
+        return;
+    }
+
+    if (_delegate != nullptr)
+    {
+        _delegate -&amp;gt; pageViewDidScroll(this);
+    }
+}
+
+void XKPageView::addPage(Node *node)
+{
+    if (_direction == ScrollView::Direction::HORIZONTAL) {
+        node -&amp;gt; setPosition(Point(pageCount * pageSize.width + node -&amp;gt; getPositionX(),node -&amp;gt; getPositionY()));
+        this -&amp;gt; setContentSize(Size((pageCount + 1) * pageSize.width,pageSize.height));
+    }else {
+        node -&amp;gt; setPosition(Point(node -&amp;gt; getPositionX(),pageCount * pageSize.height + node -&amp;gt; getPositionY()));
+        this -&amp;gt; setContentSize(Size(pageSize.width,(pageCount + 1) *pageSize.height));
+    }
+    node -&amp;gt; setTag(pageCount + XKPAGEVIEW_TAG);
+    _container -&amp;gt; addChild(node);
+    pageCount ++;
+
+}
+
+Node *XKPageView::getPageAtIndex(int index)
+{
+    if (index &amp;lt; pageCount &amp;amp;&amp;amp; index &amp;gt;= 0) {
+        return _container -&amp;gt; getChildByTag(index + XKPAGEVIEW_TAG);
+    }
+    return  NULL;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;测试用的HelloWorld.h&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#ifndef __HELLOWORLD_SCENE_H__
+#define __HELLOWORLD_SCENE_H__  
+#include &amp;quot;cocos2d.h&amp;quot;
+#include &amp;quot;cocos-ext.h&amp;quot;
+#include &amp;quot;XKPageView.h&amp;quot;
+
+USING_NS_CC_EXT;
+
+class HelloWorld : public cocos2d::Layer, public XKPageViewDelegate
+{
+public:
+    // there&amp;#39;s no &amp;#39;id&amp;#39; in cpp, so we recommend returning the class instance pointer
+    static cocos2d::Scene* createScene();
+
+    // Here&amp;#39;s a difference. Method &amp;#39;init&amp;#39; in cocos2d-x returns bool, instead of returning &amp;#39;id&amp;#39; in cocos2d-iphone
+    virtual bool init();
+
+    // implement the &amp;quot;static create()&amp;quot; method manually
+    CREATE_FUNC(HelloWorld);
+
+    Layer *getContainer();
+
+    // PageViewDelegate
+    virtual Size sizeForPerPage();
+    virtual void pageViewDidScroll(XKPageView *pageView);
+private:
+    XKPageView *pageView;
+    void addPages();
+};
+
+#endif // __HELLOWORLD_SCENE_H__
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;HelloWorld.cpp&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#include &amp;quot;HelloWorldScene.h&amp;quot;
+USING_NS_CC;
+
+#define COIN_WIDTH 212
+#define COIN_GAP 30
+#define COIN_COUNT 11
+
+Scene* HelloWorld::createScene()
+{
+    // &amp;#39;scene&amp;#39; is an autorelease object
+    auto scene = Scene::create();
+
+    // &amp;#39;layer&amp;#39; is an autorelease object
+    auto layer = HelloWorld::create();
+
+    // add layer as a child to scene
+    scene-&amp;gt;addChild(layer);
+
+    // return the scene
+    return scene;
+}
+
+// on &amp;quot;init&amp;quot; you need to initialize your instance
+bool HelloWorld::init()
+{
+    //////////////////////////////
+    // 1. super init first
+    if ( !Layer::init() )
+    {
+        return false;
+    }
+    Size visibleSize = Director::getInstance() -&amp;gt; getVisibleSize();
+    //XKPageView::create(可视范围, XKPageViewDelegate, container);
+//    auto page = XKPageView::create(Size(visibleSize.width ,COIN_WIDTH), this, this -&amp;gt; getContainer());
+    pageView = XKPageView::create(Size(visibleSize.width, COIN_WIDTH), this);
+    pageView -&amp;gt; setDirection(ScrollView::Direction::HORIZONTAL);
+    //XKPageView的滚动区域
+//    page -&amp;gt; setContentSize(Size((COIN_WIDTH + COIN_GAP)* COIN_COUNT ,COIN_WIDTH));
+    //container 定位在屏幕中间
+    pageView -&amp;gt; setPosition(Point((visibleSize.width - COIN_WIDTH) * 0.5, (visibleSize.height - COIN_WIDTH) * 0.5));
+
+    addPages();
+    //设置裁切为false, 这样layer 溢出pageView的Size还能显示，只是为了演示效果而已~
+    pageView -&amp;gt; setClippingToBounds(false);
+    this -&amp;gt; addChild(pageView);
+
+    /*测试功能而已*/
+    Node *node = pageView -&amp;gt; getPageAtIndex(5);
+    log(&amp;quot;tag = %d&amp;quot;,node -&amp;gt; getTag());
+    node -&amp;gt; setScale(1.3f);
+
+    return true;
+}
+
+void HelloWorld::addPages()
+{
+    Size coinSize = Sprite::create(&amp;quot;coin.png&amp;quot;) -&amp;gt; getContentSize();
+    //11个layer 加到layer 上
+    for (int i = 0; i &amp;lt; COIN_COUNT; i++) {
+        auto sprite = Sprite::create(&amp;quot;coin.png&amp;quot;);
+        sprite -&amp;gt; setPosition(coinSize.width * 0.5, coinSize.height * 0.5);
+        std::string str = StringUtils::format(&amp;quot;%d&amp;quot;, i);
+        Label *label = Label::createWithSystemFont(str, &amp;quot;Arial&amp;quot;, 60);
+        label -&amp;gt; setTextColor(Color4B(0,0,0,255));
+        Size size = sprite -&amp;gt; getContentSize();
+        label -&amp;gt; setPosition(size.width * 0.5, size.height * 0.5);
+        sprite -&amp;gt; addChild(label);
+        pageView -&amp;gt; addPage(sprite);
+    }
+}
+
+Layer *HelloWorld::getContainer()
+{
+    auto layer = Layer::create();
+    Size coinSize = Sprite::create(&amp;quot;coin.png&amp;quot;) -&amp;gt; getContentSize();
+    //11个sprite 加到_container 上
+    for (int i = 0; i &amp;lt; COIN_COUNT; i++) {
+        auto sprite = Sprite::create(&amp;quot;coin.png&amp;quot;);
+        sprite -&amp;gt; setPosition(coinSize.width * 0.5 + i * (coinSize.width + COIN_GAP) , coinSize.height * 0.5);
+        layer -&amp;gt; addChild(sprite);
+        std::string str = StringUtils::format(&amp;quot;%d&amp;quot;, i);
+        Label *label = Label::createWithSystemFont(str, &amp;quot;Arial&amp;quot;, 60);
+        label -&amp;gt; setTextColor(Color4B(0,0,0,255));
+        Size size = sprite -&amp;gt; getContentSize();
+        label -&amp;gt; setPosition(size.width * 0.5, size.height * 0.5);
+        sprite -&amp;gt; addChild(label);
+    }
+    return layer;
+}
+
+Size HelloWorld::sizeForPerPage()
+{
+    //Delegate 的东西，返回每个Page 的Size
+    return Size(COIN_WIDTH + COIN_GAP, COIN_WIDTH);
+}
+
+void HelloWorld::pageViewDidScroll(XKPageView *pageView)
+{
+    //监听滚动时间，可以再这里写滚动时候要添加的代码,比如缩放~
+    log(&amp;quot;pageViewDidScroll&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;我把资源都放在CSDN上面了，需要的可以去下载~&lt;/code&gt;&lt;br&gt;
+&lt;a href=&quot;http://download.csdn.net/detail/joueu/8202549&quot;&gt;http://download.csdn.net/detail/joueu/8202549&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>大话西游</title>
+   <link href="http://HelKyle.github.io/%E7%99%BD%E6%97%A5%E6%A2%A6/2014/11/24/HelloWorld/"/>
+   <updated>2014-11-24T00:00:00+08:00</updated>
+   <id>http://HelKyle.github.io/%E7%99%BD%E6%97%A5%E6%A2%A6/2014/11/24/HelloWorld</id>
+   <content type="html">&lt;p&gt;我知道有一天他会在一个万众嘱目的情况下出现，身披金甲圣衣，脚踏七彩云来娶我！&lt;br&gt;
+&lt;img src=&quot;/public/images/%E5%A4%A7%E8%AF%9D%E8%A5%BF%E6%B8%B81.jpeg&quot; alt=&quot;zixia&quot;&gt;  &lt;/p&gt;
+
+&lt;p&gt;他活得好像条狗!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/public/images/%E5%A4%A7%E8%AF%9D%E8%A5%BF%E6%B8%B82.jpg&quot; alt=&quot;likeadog&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

@@ -3,7 +3,6 @@ layout: post
 title: cocos 2dx 3.x实现的PageView
 category: cocos2dx
 date: 2014-11-27
-tags: 技术
 ---
 ###转载请注明出处：   
 * [http://helkyle.tk/cocos-2dx-3xPageView/][1]
@@ -11,7 +10,7 @@ tags: 技术
 
 > 之前使用PageView 觉得用起来好像不太爽，没办法达到我想要实现的功能，又不想修改源码。最近闲得蛋疼就花了半天时间捣鼓一个出来，就命名叫XKPageView吧，XK嘛...大家好像都这么命名~  
 > 废话不多说，先看显示效果  
-!["test"](/res/img/cocos-2dx_3x_PageView/test.gif)
+!["test"](/public/images/cocos-2dx_3x_PageView/test.gif)
 
 > 因为是在模拟器上录像的，所以看上去会有点卡...真机测试就不会了。
 （编号为5那个怎么会那么大嗟？) 看代码...
@@ -21,7 +20,7 @@ tags: 技术
 我直接上代码啦，代码里面都有注释了，一些太简单的东西就不多啰嗦。如果有问题的话可以留言问我哈~
 ,没有时间测试那么多...所以可能会有不少bug
 
-```PageView.h```  
+PageView.h
 
 	//  XKPageView.h
 	//  XKPageView
@@ -75,7 +74,7 @@ tags: 技术
 	
 	#endif /* defined(__XKPageView__XKPageView__) */
 
-```XKPageView.cpp```
+XKPageView.cpp
 
 	//
 	//  XKPageView.cpp
@@ -251,7 +250,7 @@ tags: 技术
 	    return  NULL;
 	}
 	
-```测试用的HelloWorld.h```
+测试用的HelloWorld.h
 
 	#ifndef __HELLOWORLD_SCENE_H__
 	#define __HELLOWORLD_SCENE_H__	
@@ -285,7 +284,7 @@ tags: 技术
 	
 	#endif // __HELLOWORLD_SCENE_H__
 	
-```HelloWorld.cpp```
+HelloWorld.cpp
 		
 	#include "HelloWorldScene.h"
 	USING_NS_CC;
