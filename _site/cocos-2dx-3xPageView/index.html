@@ -11,14 +11,14 @@
 
   <title>
     
-      cocos 2dx 3.x实现的PageView &middot; HelKyle
+      cocos 2dx 3.x实现的PageView &middot; 
     
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/poole.css">
-  <link rel="stylesheet" href="/public/css/syntax.css">
-  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="public/css/poole.css">
+  <link rel="stylesheet" href="public/css/syntax.css">
+  <link rel="stylesheet" href="public/css/lanyon.css">
   <!-- Load Google fonts asynchroneously -->
   <script type="text/javascript">
   WebFontConfig = {
@@ -34,8 +34,8 @@
     s.parentNode.insertBefore(wf, s);
   })(); </script>
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png?v=2">
-  <link rel="shortcut icon" href="/public/favicon.ico?v=2">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="public/apple-touch-icon-precomposed.png?v=2">
+  <link rel="shortcut icon" href="public/favicon.ico?v=2">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -61,11 +61,11 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-item">
-    <p>一头程序猿</p>
+    <p></p>
   </div>
 
   <nav class="sidebar-nav">
-    <a class="sidebar-nav-item" href="/">首页</a>
+    <a class="sidebar-nav-item" href="">首页</a>
 
     
     
@@ -75,17 +75,13 @@
     
       
         
-      
-    
-      
-        
-          <a class="sidebar-nav-item" href="/about/">关于</a>
+          <a class="sidebar-nav-item" href="/about.html">关于</a>
         
       
     
       
         
-          <a class="sidebar-nav-item" href="/archives/">博文</a>
+          <a class="sidebar-nav-item" href="/archives.html">博文</a>
         
       
     
@@ -93,13 +89,17 @@
     
       
         
-          <a class="sidebar-nav-item" href="/categorys/">分类</a>
+          <a class="sidebar-nav-item" href="/categorys.html">分类</a>
         
       
     
       
         
-          <a class="sidebar-nav-item" href="/guestbook/">留言</a>
+          <a class="sidebar-nav-item" href="/guestbook.html">留言</a>
+        
+      
+    
+      
         
       
     
@@ -120,8 +120,8 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <a href="/" title="Home">HelKyle</a>
-            <small>  这不是bug.</small>
+            <a href="/" title="Home"></a>
+            <small></small>
           </h3>
         </div>
       </div>
@@ -161,25 +161,25 @@
 
 <ul>
 <li><a href="http://helkyle.tk/cocos-2dx-3xPageView/">http://helkyle.tk/cocos-2dx-3xPageView/</a></li>
-<li><a href="http://blog.csdn.net/joueu/article/details/41532763">http://blog.csdn.net/joueu/article/details/41532763</a><br></li>
+<li><a href="http://blog.csdn.net/joueu/article/details/41532763">http://blog.csdn.net/joueu/article/details/41532763</a></li>
 </ul>
 
-<blockquote>
-<p>之前使用PageView 觉得用起来好像不太爽，没办法达到我想要实现的功能，又不想修改源码。最近闲得蛋疼就花了半天时间捣鼓一个出来，就命名叫XKPageView吧，XK嘛...大家好像都这么命名~<br>
-废话不多说，先看显示效果<br>
-<img src="/public/images/cocos-2dx_3x_PageView/test.gif" alt="&quot;test&quot;"></p>
+
+<blockquote><p>之前使用PageView 觉得用起来好像不太爽，没办法达到我想要实现的功能，又不想修改源码。最近闲得蛋疼就花了半天时间捣鼓一个出来，就命名叫XKPageView吧，XK嘛...大家好像都这么命名~<br/>
+废话不多说，先看显示效果<br/>
+<img src="/public/images/cocos-2dx_3x_PageView/test.gif" alt="&quot;test&quot;" /></p>
 
 <p>因为是在模拟器上录像的，所以看上去会有点卡...真机测试就不会了。
-（编号为5那个怎么会那么大嗟？) 看代码...</p>
-</blockquote>
+（编号为5那个怎么会那么大嗟？) 看代码...</p></blockquote>
 
-<hr>
+<hr />
 
 <p>我直接上代码啦，代码里面都有注释了，一些太简单的东西就不多啰嗦。如果有问题的话可以留言问我哈~
 ,没有时间测试那么多...所以可能会有不少bug</p>
 
 <p>PageView.h</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">//  XKPageView.h
+
+<pre><code>//  XKPageView.h
 //  XKPageView
 //
 //  Created by Joueu on 14-11-26.
@@ -189,8 +189,8 @@
 #ifndef __XKPageView__XKPageView__
 #define __XKPageView__XKPageView__
 
-#include &quot;cocos2d.h&quot;
-#include &quot;cocos-ext.h&quot;
+#include "cocos2d.h"
+#include "cocos-ext.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -230,9 +230,11 @@ public:
 };
 
 #endif /* defined(__XKPageView__XKPageView__) */
-</code></pre></div>
+</code></pre>
+
 <p>XKPageView.cpp</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">//
+
+<pre><code>//
 //  XKPageView.cpp
 //  XKPageView
 //
@@ -240,7 +242,7 @@ public:
 //
 //
 
-#include &quot;XKPageView.h&quot;
+#include "XKPageView.h"
 
 #define XKPAGEVIEW_TAG 10086
 
@@ -261,7 +263,7 @@ bool XKPageView::init(Size size,XKPageViewDelegate *delegate)
         return false;
     }
     //必须有delegate，否则断掉
-    CCASSERT(delegate, &quot;delegate should not be NULL!&quot;);
+    CCASSERT(delegate, "delegate should not be NULL!");
     setDelegate(delegate);
     if (_delegate) {
         //获取page的大小
@@ -405,26 +407,28 @@ Node *XKPageView::getPageAtIndex(int index)
     }
     return  NULL;
 }
-</code></pre></div>
+</code></pre>
+
 <p>测试用的HelloWorld.h</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">#ifndef __HELLOWORLD_SCENE_H__
+
+<pre><code>#ifndef __HELLOWORLD_SCENE_H__
 #define __HELLOWORLD_SCENE_H__  
-#include &quot;cocos2d.h&quot;
-#include &quot;cocos-ext.h&quot;
-#include &quot;XKPageView.h&quot;
+#include "cocos2d.h"
+#include "cocos-ext.h"
+#include "XKPageView.h"
 
 USING_NS_CC_EXT;
 
 class HelloWorld : public cocos2d::Layer, public XKPageViewDelegate
 {
 public:
-    // there&#39;s no &#39;id&#39; in cpp, so we recommend returning the class instance pointer
+    // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();
 
-    // Here&#39;s a difference. Method &#39;init&#39; in cocos2d-x returns bool, instead of returning &#39;id&#39; in cocos2d-iphone
+    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
 
-    // implement the &quot;static create()&quot; method manually
+    // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
     Layer *getContainer();
@@ -438,9 +442,11 @@ private:
 };
 
 #endif // __HELLOWORLD_SCENE_H__
-</code></pre></div>
+</code></pre>
+
 <p>HelloWorld.cpp</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">#include &quot;HelloWorldScene.h&quot;
+
+<pre><code>#include "HelloWorldScene.h"
 USING_NS_CC;
 
 #define COIN_WIDTH 212
@@ -449,10 +455,10 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-    // &#39;scene&#39; is an autorelease object
+    // 'scene' is an autorelease object
     auto scene = Scene::create();
 
-    // &#39;layer&#39; is an autorelease object
+    // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
 
     // add layer as a child to scene
@@ -462,7 +468,7 @@ Scene* HelloWorld::createScene()
     return scene;
 }
 
-// on &quot;init&quot; you need to initialize your instance
+// on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
     //////////////////////////////
@@ -488,7 +494,7 @@ bool HelloWorld::init()
 
     /*测试功能而已*/
     Node *node = pageView -&gt; getPageAtIndex(5);
-    log(&quot;tag = %d&quot;,node -&gt; getTag());
+    log("tag = %d",node -&gt; getTag());
     node -&gt; setScale(1.3f);
 
     return true;
@@ -496,13 +502,13 @@ bool HelloWorld::init()
 
 void HelloWorld::addPages()
 {
-    Size coinSize = Sprite::create(&quot;coin.png&quot;) -&gt; getContentSize();
+    Size coinSize = Sprite::create("coin.png") -&gt; getContentSize();
     //11个layer 加到layer 上
     for (int i = 0; i &lt; COIN_COUNT; i++) {
-        auto sprite = Sprite::create(&quot;coin.png&quot;);
+        auto sprite = Sprite::create("coin.png");
         sprite -&gt; setPosition(coinSize.width * 0.5, coinSize.height * 0.5);
-        std::string str = StringUtils::format(&quot;%d&quot;, i);
-        Label *label = Label::createWithSystemFont(str, &quot;Arial&quot;, 60);
+        std::string str = StringUtils::format("%d", i);
+        Label *label = Label::createWithSystemFont(str, "Arial", 60);
         label -&gt; setTextColor(Color4B(0,0,0,255));
         Size size = sprite -&gt; getContentSize();
         label -&gt; setPosition(size.width * 0.5, size.height * 0.5);
@@ -514,14 +520,14 @@ void HelloWorld::addPages()
 Layer *HelloWorld::getContainer()
 {
     auto layer = Layer::create();
-    Size coinSize = Sprite::create(&quot;coin.png&quot;) -&gt; getContentSize();
+    Size coinSize = Sprite::create("coin.png") -&gt; getContentSize();
     //11个sprite 加到_container 上
     for (int i = 0; i &lt; COIN_COUNT; i++) {
-        auto sprite = Sprite::create(&quot;coin.png&quot;);
+        auto sprite = Sprite::create("coin.png");
         sprite -&gt; setPosition(coinSize.width * 0.5 + i * (coinSize.width + COIN_GAP) , coinSize.height * 0.5);
         layer -&gt; addChild(sprite);
-        std::string str = StringUtils::format(&quot;%d&quot;, i);
-        Label *label = Label::createWithSystemFont(str, &quot;Arial&quot;, 60);
+        std::string str = StringUtils::format("%d", i);
+        Label *label = Label::createWithSystemFont(str, "Arial", 60);
         label -&gt; setTextColor(Color4B(0,0,0,255));
         Size size = sprite -&gt; getContentSize();
         label -&gt; setPosition(size.width * 0.5, size.height * 0.5);
@@ -539,13 +545,12 @@ Size HelloWorld::sizeForPerPage()
 void HelloWorld::pageViewDidScroll(XKPageView *pageView)
 {
     //监听滚动时间，可以再这里写滚动时候要添加的代码,比如缩放~
-    log(&quot;pageViewDidScroll&quot;);
+    log("pageViewDidScroll");
 }
-</code></pre></div>
-<blockquote>
-<p><code>我把资源都放在CSDN上面了，需要的可以去下载~</code><br>
-<a href="http://download.csdn.net/detail/joueu/8202549">http://download.csdn.net/detail/joueu/8202549</a></p>
-</blockquote>
+</code></pre>
+
+<blockquote><p><code>我把资源都放在CSDN上面了，需要的可以去下载~ </code> <br/>
+<a href="http://download.csdn.net/detail/joueu/8202549">http://download.csdn.net/detail/joueu/8202549</a></p></blockquote>
 
 </div>
 
@@ -555,7 +560,7 @@ void HelloWorld::pageViewDidScroll(XKPageView *pageView)
     
       <li>
         <h5>
-          <a href="/cocos2dx/2014/11/27/pageview/">
+          <a href="/pageview/">
             进阶版Pageview
             <small>27 Nov 2014</small>
           </a>
@@ -564,7 +569,7 @@ void HelloWorld::pageViewDidScroll(XKPageView *pageView)
     
       <li>
         <h5>
-          <a href="/%E7%99%BD%E6%97%A5%E6%A2%A6/2014/11/24/HelloWorld/">
+          <a href="/HelloWorld/">
             大话西游
             <small>24 Nov 2014</small>
           </a>
